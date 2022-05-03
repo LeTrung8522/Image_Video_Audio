@@ -64,6 +64,7 @@
         android:columnCount="4"
         android:gravity="center"
         android:useDefaultMargins="true"
+        android:layout_marginHorizontal="10dp"
         app:layout_constraintBottom_toTopOf="@id/second_buttons_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,14 +72,14 @@
 
         <Button
             android:id="@+id/load_button"
-            android:layout_width="wrap_content"
+            android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/teal_700"
             android:text="Load" />
 
         <Button
             android:id="@+id/play_button"
-            android:layout_width="wrap_content"
+            android:layout_width="76dp"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
             android:text="Play" />
@@ -90,12 +91,6 @@
             android:layout_margin="3dp"
             android:text="Pause" />
 
-        <Button
-            android:id="@+id/forward_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="0dp"
-            android:text="Forward" />
     </LinearLayout>
 
     <LinearLayout
@@ -109,12 +104,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/first_buttons_container">
-
-        <Button
-            android:id="@+id/rewind_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rewind" />
 
         <Button
             android:id="@+id/audio_current_button"
@@ -137,6 +126,7 @@
             android:backgroundTint="@color/teal_700"
             android:padding="0dp"
             android:text="Save" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

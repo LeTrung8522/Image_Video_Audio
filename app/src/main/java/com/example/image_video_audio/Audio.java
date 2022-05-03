@@ -43,6 +43,7 @@ public class Audio extends AppCompatActivity {
     Button audioCurrentButton;
     Button stopButton;
     Button saveButton;
+    Button loopButton;
 
     ActivityResultLauncher<String> pickerLauncher = registerForActivityResult(
             new ActivityResultContracts.GetContent(),
@@ -67,7 +68,7 @@ public class Audio extends AppCompatActivity {
             mediaPlayer = MediaPlayer.create(this, R.raw.song2);
 
             //Load audio from gallery
-            pickerLauncher.launch("audio/*");
+//            pickerLauncher.launch("audio/*");
 
             //Load audio from file
 //            File filePath = new File(
@@ -93,36 +94,16 @@ public class Audio extends AppCompatActivity {
             }
         });
 
+
+
+
         pauseButton = findViewById(R.id.pause_button);
         pauseButton.setOnClickListener(view -> {
             if (mediaPlayer != null && mediaPlayer.isPlaying())
                 mediaPlayer.pause();
         });
 
-        forwardButton = findViewById(R.id.forward_button);
-        forwardButton.setOnClickListener(view -> {
-            if (mediaPlayer != null) {
-                int currentAudioPosition = mediaPlayer.getCurrentPosition();
-                int audioDuration = mediaPlayer.getDuration();
-                if (mediaPlayer.isPlaying() && currentAudioPosition <= audioDuration - 3000) {
-                    currentAudioPosition += 3000;
-                    mediaPlayer.seekTo(currentAudioPosition);
-                    audioCurrentTextView.setText(convertDurationToAudioTime(currentAudioPosition));
-                }
-            }
-        });
 
-        rewindButton = findViewById(R.id.rewind_button);
-        rewindButton.setOnClickListener(view -> {
-            if (mediaPlayer != null) {
-                int currentAudioPosition = mediaPlayer.getCurrentPosition();
-                if (mediaPlayer.isPlaying() && currentAudioPosition >= 3000) {
-                    currentAudioPosition -= 3000;
-                    mediaPlayer.seekTo(currentAudioPosition);
-                    audioCurrentTextView.setText(convertDurationToAudioTime(currentAudioPosition));
-                }
-            }
-        });
 
         audioCurrentButton = findViewById(R.id.audio_current_button);
         audioCurrentButton.setOnClickListener(view -> {
@@ -148,6 +129,8 @@ public class Audio extends AppCompatActivity {
             //saveAudioToGallery();
             saveAudioToFile();
         });
+
+
     }
 
     private void saveAudioToGallery() {
