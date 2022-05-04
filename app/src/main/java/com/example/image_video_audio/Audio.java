@@ -38,12 +38,10 @@ public class Audio extends AppCompatActivity {
     Button loadButton;
     Button playButton;
     Button pauseButton;
-    Button forwardButton;
-    Button rewindButton;
     Button audioCurrentButton;
     Button stopButton;
-    Button saveButton;
-    Button loopButton;
+
+
 
     ActivityResultLauncher<String> pickerLauncher = registerForActivityResult(
             new ActivityResultContracts.GetContent(),
@@ -61,7 +59,7 @@ public class Audio extends AppCompatActivity {
         audioDurationTextView = findViewById(R.id.audio_duration_textview);
         audioNameTextView = findViewById(R.id.audio_name_textview);
         audioCurrentTextView = findViewById(R.id.audio_current_textview);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         loadButton = findViewById(R.id.load_button);
         loadButton.setOnClickListener(view -> {
             //Load audio from resource
@@ -124,11 +122,6 @@ public class Audio extends AppCompatActivity {
             }
         });
 
-        saveButton = findViewById(R.id.save_button);
-        saveButton.setOnClickListener(view -> {
-            //saveAudioToGallery();
-            saveAudioToFile();
-        });
 
 
     }
@@ -256,4 +249,5 @@ public class Audio extends AppCompatActivity {
                 TimeUnit.MILLISECONDS.toSeconds(duration)
         );
     }
+
 }

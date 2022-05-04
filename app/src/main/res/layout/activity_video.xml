@@ -29,46 +29,45 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
 
+            <LinearLayout
+                android:layout_width="246dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="40dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+
                 >
+
                 <Button
                     android:id="@+id/btn_addRaw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="ADD RAW"
                     android:backgroundTint="@color/black"
-                    />
+                    android:text="ADD RAW" />
 
                 <Button
                     android:id="@+id/btn_addURL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="ADD URL"
                     android:backgroundTint="@color/black"
-                    />
+                    android:text="ADD URL" />
 
                 <Button
                     android:id="@+id/btn_addStorage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="ADD Storage"
                     android:backgroundTint="@color/black"
-                    />
+                    android:text="ADD Storage" />
 
                 <Button
                     android:id="@+id/btn_addGallery"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="ADD Gallery"
                     android:backgroundTint="@color/black"
-                    />
+                    android:text="ADD Gallery" />
 
 
             </LinearLayout>
@@ -80,20 +79,7 @@
                 android:gravity="center"
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="40dp"
-                >
-
-                <Button
-                    android:id="@+id/btn_saveGallery"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="SAVE TO GALLERY" />
-
-                <Button
-                    android:id="@+id/btn_saveStorage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="SAVE TO STORAGE" />
-            </LinearLayout>
+                />
         </LinearLayout>
 
     </TableLayout>

@@ -59,15 +59,13 @@ public class Video extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         CheckPermissions();
         Button btn_addRaw = findViewById(R.id.btn_addRaw);
         Button btn_addURL = findViewById(R.id.btn_addURL);
         Button btn_addStorage = findViewById(R.id.btn_addStorage);
         Button btn_addGallery = findViewById(R.id.btn_addGallery);
-        Button btn_saveGallery = findViewById(R.id.btn_saveGallery);
-        Button btn_saveStorage = findViewById(R.id.btn_saveStorage);
-        // Find your VideoView in your video main xml layout
         mVideoView = findViewById(R.id.videoView_main);
 
         // create an object of media controller class
@@ -139,27 +137,9 @@ public class Video extends AppCompatActivity {
             }
         });
 
-        btn_saveGallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (uriVideo == null) {
-                    makeToast("Please choose video");
-                    return;
-                }
-                saveVideoToGallery(uriVideo);
-            }
-        });
 
-        btn_saveStorage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (uriVideo == null) {
-                    makeToast("Please choose video");
-                    return;
-                }
-                saveVideoToStorage(uriVideo);
-            }
-        });
+
+
     }
 
     private void saveVideoToStorage(Uri _uriVideo) {
