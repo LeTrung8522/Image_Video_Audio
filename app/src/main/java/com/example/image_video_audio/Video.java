@@ -1,41 +1,25 @@
 package com.example.image_video_audio;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-import android.Manifest;
-import android.content.ContentValues;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class Video extends AppCompatActivity {
-    private static final int REQUEST_CODE_PERMISSION = 1;
     private static final String KEY_CURRENT_POSITION = "current_position";
     private static final String KEY_CURRENT_URI = "current_uri";
 
     private VideoView mVideoView;
-    private MediaController mediaController;
     private Uri uriVideo;
     private int position = -1;
 
@@ -58,14 +42,12 @@ public class Video extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
 
-        CheckPermissions();
-
         Button btn_addGallery = findViewById(R.id.btn_addGallery);
         // Find your VideoView in your video main xml layout
         mVideoView = findViewById(R.id.videoView_main);
 
         // create an object of media controller class
-        mediaController = new MediaController(this);
+        MediaController mediaController = new MediaController(this);
         mediaController.setAnchorView(mVideoView);
         // set the media controller for video view
         mVideoView.setMediaController(mediaController);
@@ -77,6 +59,7 @@ public class Video extends AppCompatActivity {
                 makeToast("Thank You...!!!");
             }
         });
+
         mVideoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
             @Override
             public boolean onError(MediaPlayer mp, int what, int extra) {
@@ -85,14 +68,10 @@ public class Video extends AppCompatActivity {
             }
         });
 
-
         btn_addGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (CheckPermissions()) {
-                    // Access to Gallery
-                    pickerLauncher.launch("video/*");
-                }
+                pickerLauncher.launch("video/*");
             }
         });
     }
@@ -125,21 +104,6 @@ public class Video extends AppCompatActivity {
         mVideoView.setVideoURI(uriVideo);
         mVideoView.seekTo(pos);
         mVideoView.start();
-    }
-
-    public boolean CheckPermissions() {
-        // Check whether user has granted read external storage permission to this activity.
-        int readExternalStoragePermission = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
-                + ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-        // If not grant then require read external storage permission.
-        if (readExternalStoragePermission != PackageManager.PERMISSION_GRANTED) {
-            String requirePermission[] = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-            ActivityCompat.requestPermissions(Video.this, requirePermission, REQUEST_CODE_PERMISSION);
-            return false;
-        } else {
-            return true;
-        }
     }
 
     private void makeToast(String message) {

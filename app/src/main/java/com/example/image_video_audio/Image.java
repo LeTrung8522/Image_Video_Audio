@@ -40,7 +40,6 @@ public class Image extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         imageView = findViewById(R.id.image_view);
         Button pickFromGalleryBtn = findViewById(R.id.pick_from_gallery_button);
@@ -53,8 +52,6 @@ public class Image extends AppCompatActivity {
         saveGalleryBtn.setOnClickListener(view -> saveImageToGallery());
         saveFileBtn.setOnClickListener(view -> saveImageToFile());
     }
-
-
 
     private void loadImageFromUri(Uri uri) {
         try {
