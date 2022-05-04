@@ -45,24 +45,16 @@ public class Image extends AppCompatActivity {
         imageView = findViewById(R.id.image_view);
         Button pickFromGalleryBtn = findViewById(R.id.pick_from_gallery_button);
         Button saveGalleryBtn = findViewById(R.id.save_gallery_button);
-        Button loadFromFileBtn = findViewById(R.id.load_from_file_button);
+
         Button saveFileBtn = findViewById(R.id.save_file_button);
 
         pickFromGalleryBtn.setOnClickListener(view -> pickerLauncher.launch("image/*"));
-        loadFromFileBtn.setOnClickListener(view -> loadImageFromFile());
+
         saveGalleryBtn.setOnClickListener(view -> saveImageToGallery());
         saveFileBtn.setOnClickListener(view -> saveImageToFile());
     }
 
-    private void loadImageFromFile() {
-        String path = Environment.getExternalStorageDirectory() + "/Download/test_image1.png";
-        Bitmap loadedBitmap = BitmapFactory.decodeFile(path);
-        if (loadedBitmap != null) {
-            currentBitmap = loadedBitmap;
-            imageView.setImageBitmap(currentBitmap);
-        } else
-            Toast.makeText(this, "Failed to load bitmap from file!", Toast.LENGTH_SHORT).show();
-    }
+
 
     private void loadImageFromUri(Uri uri) {
         try {

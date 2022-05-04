@@ -59,9 +59,7 @@ public class Video extends AppCompatActivity {
         setContentView(R.layout.activity_video);
 
         CheckPermissions();
-        Button btn_addRaw = findViewById(R.id.btn_addRaw);
-        Button btn_addURL = findViewById(R.id.btn_addURL);
-        Button btn_addStorage = findViewById(R.id.btn_addStorage);
+
         Button btn_addGallery = findViewById(R.id.btn_addGallery);
         // Find your VideoView in your video main xml layout
         mVideoView = findViewById(R.id.videoView_main);
@@ -87,44 +85,7 @@ public class Video extends AppCompatActivity {
             }
         });
 
-        btn_addRaw.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String videoPath = "android.resource://" + getPackageName() + "/" + R.raw.video_sample_7;
-                uriVideo = Uri.parse(videoPath);
-                // set the path for the video view
-                mVideoView.setVideoURI(uriVideo);
-                // start a video
-                mVideoView.start();
-            }
-        });
-        btn_addURL.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String videoPath = "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4";
-                uriVideo = Uri.parse(videoPath);
-                // set the path for the video view
-                mVideoView.setVideoURI(uriVideo);
-                // start a video
-                mVideoView.start();
-            }
-        });
-        btn_addStorage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (CheckPermissions()) {
-                    // Access to Storage
-                    String videoPath = Environment.getExternalStorageDirectory() + "/Download/video_sample_1.mp4";
-                    uriVideo = Uri.parse(videoPath);
-                    if (uriVideo != null) {
-                        // set the path for the video view
-                        mVideoView.setVideoURI(uriVideo);
-                        // start a video
-                        mVideoView.start();
-                    }
-                }
-            }
-        });
+
         btn_addGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

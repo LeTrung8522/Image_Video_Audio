@@ -63,10 +63,10 @@ public class Audio extends AppCompatActivity {
         loadButton = findViewById(R.id.load_button);
         loadButton.setOnClickListener(view -> {
             //Load audio from resource
-            mediaPlayer = MediaPlayer.create(this, R.raw.song2);
+ //           mediaPlayer = MediaPlayer.create(this, R.raw.song2);
 
             //Load audio from gallery
-//            pickerLauncher.launch("audio/*");
+            pickerLauncher.launch("audio/*");
 
             //Load audio from file
 //            File filePath = new File(
@@ -242,11 +242,10 @@ public class Audio extends AppCompatActivity {
     }
 
     private String convertDurationToAudioTime(int duration) {
-        return String.format(
-                Locale.US,
-                "%02d:%02d",
+        return String.format("%02d:%02d",
                 TimeUnit.MILLISECONDS.toMinutes(duration),
-                TimeUnit.MILLISECONDS.toSeconds(duration)
+                TimeUnit.MILLISECONDS.toSeconds(duration) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(duration))
         );
     }
 
