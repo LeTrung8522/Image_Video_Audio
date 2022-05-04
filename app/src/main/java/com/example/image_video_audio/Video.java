@@ -31,7 +31,6 @@ import java.io.OutputStream;
 
 public class Video extends AppCompatActivity {
     private static final int REQUEST_CODE_PERMISSION = 1;
-    private static final int REQUEST_CODE_SELECT_VIDEO = 2;
     private static final String KEY_CURRENT_POSITION = "current_position";
     private static final String KEY_CURRENT_URI = "current_uri";
 
@@ -40,17 +39,16 @@ public class Video extends AppCompatActivity {
     private Uri uriVideo;
     private int position = -1;
 
-    ActivityResultLauncher<Intent> pickerLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
+    ActivityResultLauncher<String> pickerLauncher = registerForActivityResult(
+            new ActivityResultContracts.GetContent(),
+            new ActivityResultCallback<Uri>() {
                 @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getData()!=null){
-                        uriVideo=result.getData().getData();
+                public void onActivityResult(Uri result) {
+                    if (result != null) {
+                        uriVideo = result;
                         mVideoView.setVideoURI(uriVideo);
                         mVideoView.start();
                     }
-
                 }
             }
     );
@@ -59,13 +57,13 @@ public class Video extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         CheckPermissions();
         Button btn_addRaw = findViewById(R.id.btn_addRaw);
         Button btn_addURL = findViewById(R.id.btn_addURL);
         Button btn_addStorage = findViewById(R.id.btn_addStorage);
         Button btn_addGallery = findViewById(R.id.btn_addGallery);
+        // Find your VideoView in your video main xml layout
         mVideoView = findViewById(R.id.videoView_main);
 
         // create an object of media controller class
@@ -100,7 +98,6 @@ public class Video extends AppCompatActivity {
                 mVideoView.start();
             }
         });
-
         btn_addURL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,93 +109,31 @@ public class Video extends AppCompatActivity {
                 mVideoView.start();
             }
         });
-
         btn_addStorage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (CheckPermissions()) {
                     // Access to Storage
-                    Intent selectVideoIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                    selectVideoIntent.setType("video/*");
-                    pickerLauncher.launch(selectVideoIntent);
+                    String videoPath = Environment.getExternalStorageDirectory() + "/Download/video_sample_1.mp4";
+                    uriVideo = Uri.parse(videoPath);
+                    if (uriVideo != null) {
+                        // set the path for the video view
+                        mVideoView.setVideoURI(uriVideo);
+                        // start a video
+                        mVideoView.start();
+                    }
                 }
             }
         });
-
         btn_addGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (CheckPermissions()) {
                     // Access to Gallery
-                    Intent selectVideoIntent = new Intent(Intent.ACTION_PICK);
-                    selectVideoIntent.setType("video/*");
-                    pickerLauncher.launch(selectVideoIntent);
+                    pickerLauncher.launch("video/*");
                 }
             }
         });
-
-
-
-
-    }
-
-    private void saveVideoToStorage(Uri _uriVideo) {
-        String videoFileName = "video_" + System.currentTimeMillis() + ".mp4";
-        try {
-            new File(Environment.getExternalStorageDirectory().getAbsoluteFile() + "/Download/Save").mkdirs();
-            File file = new File(Environment.getExternalStorageDirectory().getAbsoluteFile() + "/Download/Save/" + videoFileName);
-            FileOutputStream out = new FileOutputStream(file);
-            // Get the already saved video as FileInputStream from here
-            InputStream in = getContentResolver().openInputStream(_uriVideo);
-
-            byte[] buf = new byte[8192];
-            int len;
-            int progress = 0;
-            while ((len = in.read(buf)) > 0) {
-                progress = progress + len;
-
-                out.write(buf, 0, len);
-            }
-            out.close();
-            in.close();
-
-            makeToast("Saved");
-        } catch (Exception e) {
-            makeToast("error: " + e.getMessage());
-            e.printStackTrace();
-        }
-
-    }
-
-    private void saveVideoToGallery(Uri _uriVideo) {
-        String videoFileName = "video_" + System.currentTimeMillis() + ".mp4";
-        ContentValues valueVideos = new ContentValues();
-        valueVideos.put(MediaStore.Video.Media.DISPLAY_NAME, videoFileName);
-
-        Uri collection = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
-        Uri uriSavedVideo = getContentResolver().insert(collection, valueVideos);
-
-        try {
-            OutputStream out = getContentResolver().openOutputStream(uriSavedVideo);
-            // Get the already saved video as FileInputStream from here
-            InputStream in = getContentResolver().openInputStream(_uriVideo);
-
-            byte[] buf = new byte[8192];
-            int len;
-            int progress = 0;
-            while ((len = in.read(buf)) > 0) {
-                progress = progress + len;
-
-                out.write(buf, 0, len);
-            }
-            out.close();
-            in.close();
-            getContentResolver().update(uriSavedVideo, valueVideos, null, null);
-            makeToast("Saved");
-        } catch (Exception e) {
-            makeToast("error: " + e.getMessage());
-            e.printStackTrace();
-        }
     }
 
     @Override
